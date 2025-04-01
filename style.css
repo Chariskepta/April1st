@@ -1,0 +1,360 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f4e9;
+    color: #5a4a3a;
+    overflow-x: hidden;
+}
+
+.slow-life-container {
+    min-height: 200vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+    background-image: url('images/slowliving.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+    background-color: rgba(248, 244, 233, 0.85);
+}
+
+.birthday-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 900px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #8b6b5e;
+    margin-bottom: 30px;
+}
+
+.aesthetic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.aesthetic-item {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.aesthetic-item:hover {
+    transform: scale(1.03);
+}
+
+.scroll-container {
+    position: relative;
+    margin: 40px auto;
+    width: 470px;
+    height: 400px;
+}
+
+.scroll {
+    width: 100%;
+    height: 120%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.character {
+    position: absolute;
+    width: 120px;
+    bottom: 50px;
+    left: 5%;
+    transform: translateX(-50%);
+    z-index: 3;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.birthday-message {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    padding: 20px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #5a4a3a;
+}
+
+.floating-carnations {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('images/roses.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    animation: float 15s infinite linear;
+}
+
+.floating-carnations.delay-1 {
+    animation-delay: 5s;
+    top: 20%;
+    left: 10%;
+}
+
+.floating-carnations.delay-2 {
+    animation-delay: 10s;
+    top: 70%;
+    left: 80%;
+}
+
+/* Floating Emoji Carnations */
+.floating-carnation {
+    position: absolute;
+    font-size: 2rem;
+    z-index: 1;
+    opacity: 0.7;
+    animation: float 15s infinite linear;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.floating-carnation:nth-child(2) {
+    animation-delay: 3s;
+    font-size: 2.5rem;
+}
+
+.floating-carnation:nth-child(3) {
+    animation-delay: 7s;
+    font-size: 1.8rem;
+}
+
+.floating-carnation:nth-child(4) {
+    animation-delay: 5s;
+    font-size: 2.2rem;
+}
+
+.floating-carnation:nth-child(5) {
+    animation-delay: 2s;
+    font-size: 3rem;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Slideshow container */
+.slideshow-container {
+    position: relative;
+    max-width: 1000px;
+    width: 100%;
+    margin: 70px auto;
+    overflow:hidden;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Slides */
+.slide {
+    display: none;
+    width: 100%;
+    transition: opacity 1s ease;
+}
+
+.slide img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Navigation arrows */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    transition: 0.3s;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 50%;
+    user-select: none;
+    transform: translateY(-50%);
+}
+
+.next {
+    right: 15px;
+}
+
+.prev {
+    left: 15px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Slideshow dots */
+.slideshow-dots {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.active-dot, .dot:hover {
+    background-color: #8b6b5e;
+}
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .slide img {
+        height: 300px;
+    }
+    
+    .prev, .next {
+        padding: 12px;
+        font-size: 18px;
+    }
+
+/* ===== SIGNATURE STYLES ===== */
+.signature {
+    text-align: right;
+    margin-top: 40px;
+    margin-right: 40px;
+    font-family: 'Parisienne', cursive, 'Playfair Display', serif;
+    color: #8b6b5e;
+    opacity: 0.9;
+    position: relative;
+    z-index: 3;
+}
+
+.signature p {
+    margin: 0;
+    line-height: 1.2;
+}
+
+.signature-name {
+    font-size: 2rem;
+    margin-top: -10px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    transform: translateX(-10px);
+}
+}
+
+@media (max-width: 768px) {
+    .signature {
+        margin-right: 20px;
+    }
+    .signature-name {
+        font-size: 1.7rem;
+    }
+}
+/* ===== FULLSCREEN MODAL ===== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    overflow: auto;
+}
+
+.modal-content {
+    display: block;
+    max-width: 90%;
+    max-height: 80vh;
+    margin: 5% auto;
+    animation: zoom 0.3s;
+}
+
+@keyframes zoom {
+    from {transform: scale(0.5);}
+    to {transform: scale(1);}
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #8b6b5e;
+}
+
+.modal-caption {
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Make slides clickable */
+.slide img {
+    cursor: zoom-in;
+}
