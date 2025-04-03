@@ -1,0 +1,20 @@
+{
+    "playlist": [
+      {
+        "id": 1,
+        "title": "Ordinary",
+        "artist": "Alex Warren",
+        "cover": "assets/Ordinary.jpeg",
+        "src": "music/ordinary-alexwarren.mp3",
+        "duration": "3:05"
+      },
+      {
+        "id": 2,
+        "title": "Love Yourz",
+        "artist": "J. Cole",
+        "cover": "assets/J.cole.jpeg",
+        "src": "music/love-yourz.mp3",
+        "duration": "3:31"
+      }
+    ]
+  }

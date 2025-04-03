@@ -153,4 +153,141 @@ emojis.forEach((emoji, index) => {
     carnation.style.animationDelay = (Math.random() * 5) + 's';
     container.appendChild(carnation);
 });
+// Player Elements
+const playlistContainer = document.querySelector('.playlist-container');
+const playlistTracks = document.querySelector('.playlist-tracks');
+const miniPlayerTrigger = document.querySelector('.mini-player-trigger');
+const plPlayBtn = document.getElementById('pl-play');
+const plNextBtn = document.getElementById('pl-next');
+const plPrevBtn = document.getElementById('pl-prev');
+const audioPlayer = new Audio();
+
+let currentTrackIndex = 0;
+let isPlaying = false;
+let playlist = [];
+
+// Fetch playlist from db.json
+async function fetchPlaylist() {
+  try {
+    const response = await fetch('db.json');
+    const data = await response.json();
+    playlist = data.playlist;
+    renderPlaylist();
+  } catch (error) {
+    console.error("Error loading playlist:", error);
+    // Fallback playlist if db.json fails to load
+    playlist = [
+      {
+        id: 1,
+        title: "Ordinary",
+        artist: "Alex Warren",
+        cover: "assets/Ordinary.jpg",
+        src: "music/ordinary-alexwarren.mp3",
+        duration: "3:05"
+      },
+      {
+        id: 2,
+        title: "Love Yourz",
+        artist: "J. Cole",
+        cover: "assets/J.cole.jpg",
+        src: "music/love-yourz.mp3",
+        duration: "3:31"
+      }
+    ];
+    renderPlaylist();
+  }
+}
+
+// Render Playlist
+function renderPlaylist() {
+  playlistTracks.innerHTML = '';
+  playlist.forEach((track, index) => {
+    const trackElement = document.createElement('div');
+    trackElement.className = `playlist-track ${index === currentTrackIndex ? 'active' : ''}`;
+    trackElement.innerHTML = `
+      <div class="playlist-track-cover">
+        <img src="${track.cover}" alt="${track.title}">
+      </div>
+      <div class="playlist-track-info">
+        <div class="playlist-track-title">${track.title}</div>
+        <div class="playlist-track-artist">${track.artist}</div>
+      </div>
+    `;
+    trackElement.addEventListener('click', () => playTrack(index));
+    playlistTracks.appendChild(trackElement);
+  });
+}
+
+// Play Track
+function playTrack(index) {
+  currentTrackIndex = index;
+  const track = playlist[currentTrackIndex];
+  audioPlayer.src = track.src;
+  audioPlayer.play()
+    .then(() => {
+      isPlaying = true;
+      plPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      renderPlaylist();
+    })
+    .catch(error => {
+      console.error("Playback failed:", error);
+      // Show error to user if needed
+    });
+}
+
+// Toggle Play/Pause
+function togglePlay() {
+  if (audioPlayer.paused) {
+    if (audioPlayer.src === "") {
+      playTrack(0); // Start playing first track if none is loaded
+    } else {
+      audioPlayer.play()
+        .then(() => {
+          isPlaying = true;
+          plPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        });
+    }
+  } else {
+    audioPlayer.pause();
+    isPlaying = false;
+    plPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+  }
+}
+
+// Next Track
+function nextTrack() {
+  currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+  playTrack(currentTrackIndex);
+}
+
+// Previous Track
+function prevTrack() {
+  currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+  playTrack(currentTrackIndex);
+}
+
+// Toggle Playlist Visibility
+function togglePlaylist() {
+  playlistContainer.classList.toggle('visible');
+}
+
+// Event Listeners
+miniPlayerTrigger.addEventListener('click', togglePlaylist);
+plPlayBtn.addEventListener('click', togglePlay);
+plNextBtn.addEventListener('click', nextTrack);
+plPrevBtn.addEventListener('click', prevTrack);
+
+// Initialize
+audioPlayer.volume = 0.7;
+fetchPlaylist();
+
+// Auto-play next track
+audioPlayer.addEventListener('ended', nextTrack);
+
+// Close playlist when clicking outside
+document.addEventListener('click', (e) => {
+  if (!playlistContainer.contains(e.target) && !miniPlayerTrigger.contains(e.target)) {
+    playlistContainer.classList.remove('visible');
+  }
+});
 });
